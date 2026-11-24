@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario Docente - ENAC</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #eef2f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .laptop {
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 8px solid #1a1a1a;
+        }
+
+        /* TITULO */
+        .header {
+            background: #217346;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 17px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* DESCRIPCION */
+        .descripcion {
+            background: #E8F5E9;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* BUSCADOR */
+        .buscador {
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .buscador label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #217346;
+        }
+
+        .buscador input {
+            width: 65%;
+            max-width: 500px;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #217346;
+            border-radius: 10px;
+            margin: 12px 10px;
+            outline: none;
+        }
+
+        .buscador button {
+            background: #217346;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .buscador button:hover {
+            background: #144d2e;
+        }
+
+        /* RESPUESTA */
+        .respuesta {
+            background: #FFF8E1;
+            border: 3px solid #FFB300;
+            margin: 0 30px 20px 30px;
+            padding: 22px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .respuesta h2 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .respuesta p {
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        .respuesta b {
+            color: #217346;
+        }
+
+        /* TABLA */
+        .tabla-contenedor {
+            padding: 0 30px 25px 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            min-width: 650px;
+        }
+
+        th {
+            background: #217346;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        tr:hover {
+            background: #E8F5E9;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #f2f2f2;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* ADAPTACION PARA TELEFONOS */
+        @media screen and (max-width: 768px) {
+
+            body {
+                padding: 8px;
+            }
+
+            .laptop {
+                border: 3px solid #1a1a1a;
+                border-radius: 12px;
+                width: 100%;
+            }
+
+            .header {
+                padding: 22px 10px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .descripcion {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .buscador {
+                padding: 20px 12px;
+            }
+
+            .buscador label {
+                font-size: 17px;
+            }
+
+            .buscador input {
+                width: 100%;
+                max-width: 100%;
+                margin: 12px 0;
+                font-size: 16px;
+                padding: 13px;
+            }
+
+            .buscador button {
+                width: 100%;
+                padding: 13px;
+                font-size: 16px;
+            }
+
+            .respuesta {
+                margin: 0 12px 20px;
+                padding: 15px;
+            }
+
+            .respuesta h2 {
+                font-size: 19px;
+            }
+
+            .respuesta p {
+                font-size: 15px;
+            }
+
+            .tabla-contenedor {
+                padding: 0 12px 20px;
+            }
+
+            table {
+                font-size: 13px;
+                min-width: 600px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            footer {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="laptop">
+
+    <!-- TITULO -->
+    <div class="header">
+        <h1>HORARIO DOCENTE - ENAC</h1>
+        <p>Proyecto 6 | Feria ENAC | Consulta rápida para estudiantes</p>
+    </div>
+
+    <!-- DESCRIPCION -->
+    <div class="descripcion">
+        <b>¿Qué es esto?</b>
+        Escribe el nombre del docente que buscas y te mostramos
+        en qué día, a qué hora y en qué sala hace clases.
+        <b>Sin ir a secretaría y sin llegar tarde.</b>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="buscador">
+        <label for="buscar">¿Qué docente estás buscando?</label>
+        <br>
+
+        <input
+            type="text"
+            id="buscar"
+            placeholder="Ej: María Pérez"
+            onkeyup="buscarDocente()"
+            autocomplete="off"
+        >
+
+        <button onclick="buscarDocente()">🔍 BUSCAR</button>
+    </div>
+
+    <!-- RESPUESTA -->
+    <div id="respuesta" class="respuesta">
+        <h2>✅ RESPUESTA:</h2>
+        <p id="textoRespuesta"></p>
+    </div>
+
+    <!-- TABLA -->
+    <div class="tabla-contenedor">
+
+        <table id="tabla">
+
+            <thead>
+                <tr>
+                    <th>Docente</th>
+                    <th>Asignatura</th>
+                    <th>Día</th>
+                    <th>Horario</th>
+                    <th>Sala / Piso</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr><td>María Pérez</td><td>Desarrollo de sistemas</td><td>Lunes y Miércoles</td><td>08:00 - 09:30</td><td>Sala 201 / 2do piso</td></tr>
+
+                <tr><td>Carlos Rojas</td><td>Competencia Digital</td><td>Martes y Jueves</td><td>10:00 - 11:30</td><td>Sala 105 / 1er piso</td></tr>
+
+                <tr><td>Ana González</td><td>Historia</td><td>Lunes</td><td>11:45 - 13:15</td><td>Sala 302 / 3er piso</td></tr>
+
+                <tr><td>Pedro Soto</td><td>Ciencias</td><td>Miércoles y Viernes</td><td>09:00 - 10:30</td><td>Sala 110 / 1er piso</td></tr>
+
+                <tr><td>Laura Díaz</td><td>Inglés</td><td>Jueves</td><td>08:00 - 09:30</td><td>Sala 205 / 2do piso</td></tr>
+
+                <tr><td>Jorge Muñoz</td><td>Educación Física</td><td>Viernes</td><td>14:00 - 15:30</td><td>Gimnasio / 1er piso</td></tr>
+
+                <tr><td>Camila Torres</td><td>Arte</td><td>Martes</td><td>13:30 - 15:00</td><td>Sala 301 / 3er piso</td></tr>
+
+                <tr><td>Diego Fuentes</td><td>Informática</td><td>Lunes y Viernes</td><td>10:45 - 12:15</td><td>Lab. 1 / 2do piso</td></tr>
+
+                <tr><td>Diego Martinez</td><td>Climatizacion</td><td>Lunes y Miercoles</td><td>10:45 - 12:15</td><td>Lab. 1 / 2do piso</td></tr>
+
+                <tr><td>Andrés Morales</td><td>Programación Web</td><td>Lunes y Miércoles</td><td>08:00 - 09:30</td><td>Sala 401 / 4to piso</td></tr>
+
+                <tr><td>Valentina Castro</td><td>Base de Datos</td><td>Martes y Jueves</td><td>10:00 - 11:30</td><td>Sala 402 / 4to piso</td></tr>
+
+                <tr><td>Felipe Ramírez</td><td>Redes y Comunicaciones</td><td>Lunes y Viernes</td><td>09:00 - 10:30</td><td>Sala 403 / 4to piso</td></tr>
+
+                <tr><td>Daniela Herrera</td><td>Desarrollo de Software</td><td>Martes y Miércoles</td><td>11:45 - 13:15</td><td>Sala 404 / 4to piso</td></tr>
+
+                <tr><td>Matías Silva</td><td>Sistemas Operativos</td><td>Miércoles y Viernes</td><td>08:00 - 09:30</td><td>Sala 405 / 4to piso</td></tr>
+
+                <tr><td>Camila Riquelme</td><td>Seguridad Informatica</td><td>Lunes y Jueves</td><td>14:00 - 15:30</td><td>Sala 406 / 4to piso</td></tr>
+
+                <tr><td>Javier Contreras</td><td>Programación Java</td><td>Martes y Viernes</td><td>08:00 - 09:30</td><td>Sala 407 / 4to piso</td></tr>
+
+                <tr><td>Francisca Molina</td><td>Analisis de Sistemas</td><td>Lunes y Miércoles</td><td>10:00 - 11:30</td><td>Sala 408 / 4to piso</td></tr>
+
+                <tr><td>Rodrigo Fuentes</td><td>Soporte Computacional</td><td>Jueves y Viernes</td><td>11:45 - 13:15</td><td>Sala 409 / 4to piso</td></tr>
+
+                <tr><td>Paula Navarro</td><td>Diseño de Interfaces</td><td>Martes y Jueves</td><td>14:00 - 15:30</td><td>Sala 410 / 4to piso</td></tr>
+
+                <tr><td>Sebastián Reyes</td><td>Programación Python</td><td>Lunes y Viernes</td><td>08:00 - 09:30</td><td>Sala 501 / 5to piso</td></tr>
+
+                <tr><td>Isidora Vega</td><td>Administracion de Redes</td><td>Martes y Miércoles</td><td>09:00 - 10:30</td><td>Sala 502 / 5to piso</td></tr>
+
+                <tr><td>Tomás Aguilera</td><td>Desarrollo Frontend</td><td>Lunes y Jueves</td><td>10:00 - 11:30</td><td>Sala 503 / 5to piso</td></tr>
+
+                <tr><td>Fernanda Pizarro</td><td>Desarrollo Backend</td><td>Miércoles y Viernes</td><td>14:00 - 15:30</td><td>Sala 504 / 5to piso</td></tr>
+
+                <tr><td>Ignacio Sepúlveda</td><td>Arquitectura de Computadores</td><td>Martes y Jueves</td><td>08:00 - 09:30</td><td>Sala 505 / 5to piso</td></tr>
+
+                <tr><td>Constanza Vidal</td><td>Inteligencia Artificial</td><td>Lunes y Miércoles</td><td>11:45 - 13:15</td><td>Sala 506 / 5to piso</td></tr>
+
+                <tr><td>Benjamín Ortega</td><td>Gestion de Proyectos TI</td><td>Martes y Viernes</td><td>10:00 - 11:30</td><td>Sala 507 / 5to piso</td></tr>
+
+                <tr><td>Antonia Salazar</td><td>Programación SQL</td><td>Lunes y Jueves</td><td>14:00 - 15:30</td><td>Sala 508 / 5to piso</td></tr>
+
+                <tr><td>Vicente Espinoza</td><td>Desarrollo Movil</td><td>Miércoles y Viernes</td><td>09:00 - 10:30</td><td>Sala 509 / 5to piso</td></tr>
+
+                <tr><td>Josefa Campos</td><td>Computacion en la Nube</td><td>Martes y Jueves</td><td>11:45 - 13:15</td><td>Sala 510 / 5to piso</td></tr>
+
+                <tr><td>Diego Valenzuela</td><td>Programación C#</td><td>Lunes y Miércoles</td><td>08:00 - 09:30</td><td>Sala 301 / 3er piso</td></tr>
+
+                <tr><td>Martina Araya</td><td>Testing de Software</td><td>Martes y Viernes</td><td>10:00 - 11:30</td><td>Sala 302 / 3er piso</td></tr>
+
+                <tr><td>Gabriel Soto</td><td>Administracion de Servidores</td><td>Jueves y Viernes</td><td>14:00 - 15:30</td><td>Sala 303 / 3er piso</td></tr>
+
+                <tr><td>Trinidad Mella</td><td>Programación PHP</td><td>Lunes y Jueves</td><td>09:00 - 10:30</td><td>Sala 304 / 3er piso</td></tr>
+
+                <tr><td>Maximiliano Bravo</td><td>Fundamentos de Informatica</td><td>Martes y Miércoles</td><td>11:45 - 13:15</td><td>Sala 305 / 3er piso</td></tr>
+
+                <tr><td>Javiera Figueroa</td><td>Diseño de Bases de Datos</td><td>Lunes y Viernes</td><td>08:00 - 09:30</td><td>Sala 306 / 3er piso</td></tr>
+
+                <tr><td>Lucas Carrasco</td><td>Programación JavaScript</td><td>Martes y Jueves</td><td>10:00 - 11:30</td><td>Sala 307 / 3er piso</td></tr>
+
+                <tr><td>Emilia Donoso</td><td>Analisis de Datos</td><td>Miércoles y Viernes</td><td>14:00 - 15:30</td><td>Sala 308 / 3er piso</td></tr>
+
+                <tr><td>Martín Bustamante</td><td>Ciberseguridad</td><td>Lunes y Miércoles</td><td>11:45 - 13:15</td><td>Sala 309 / 3er piso</td></tr>
+
+                <tr><td>Florencia Parra</td><td>Administracion de SQL Server</td><td>Martes y Viernes</td><td>08:00 - 09:30</td><td>Sala 310 / 3er piso</td></tr>
+
+                <tr><td>Agustín Cortés</td><td>Desarrollo de Aplicaciones</td><td>Lunes y Jueves</td><td>10:00 - 11:30</td><td>Sala 201 / 2do piso</td></tr>
+
+                <tr><td>Rocío Miranda</td><td>Redes Inalambricas</td><td>Martes y Miércoles</td><td>14:00 - 15:30</td><td>Sala 202 / 2do piso</td></tr>
+
+                <tr><td>Cristóbal Núñez</td><td>Programación Orientada a Objetos</td><td>Miércoles y Viernes</td><td>09:00 - 10:30</td><td>Sala 203 / 2do piso</td></tr>
+
+                <tr><td>Amparo Escobar</td><td>Gestion de Bases de Datos</td><td>Lunes y Viernes</td><td>11:45 - 13:15</td><td>Sala 204 / 2do piso</td></tr>
+
+                <tr><td>Emilio Tapia</td><td>Infraestructura TI</td><td>Martes y Jueves</td><td>08:00 - 09:30</td><td>Sala 205 / 2do piso</td></tr>
+
+                <tr><td>Maite Alarcón</td><td>Programación Visual</td><td>Lunes y Miércoles</td><td>10:00 - 11:30</td><td>Sala 206 / 2do piso</td></tr>
+
+                <tr><td>Bruno Gutiérrez</td><td>Desarrollo de Videojuegos</td><td>Jueves y Viernes</td><td>14:00 - 15:30</td><td>Sala 207 / 2do piso</td></tr>
+
+                <tr><td>Agustina Peña</td><td>Auditoria Informatica</td><td>Martes y Viernes</td><td>09:00 - 10:30</td><td>Sala 208 / 2do piso</td></tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        Proyecto 6 - Horario Docente | Hecho para mostrar en Laptop en la Feria ENAC
+    </footer>
+
+</div>
+
+<script>
+
+function buscarDocente() {
+
+    let texto = document.getElementById("buscar").value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    let filas = document.querySelectorAll("#tabla tbody tr");
+
+    let div = document.getElementById("respuesta");
+
+    let textoR = document.getElementById("textoRespuesta");
+
+    let encontrado = false;
+
+    filas.forEach(fila => {
+
+        let nombre = fila.cells[0].textContent
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+
+        let asignatura = fila.cells[1].textContent
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+
+        if (nombre.includes(texto) || asignatura.includes(texto)) {
+
+            fila.style.display = "";
+
+            if (texto !== "" && !encontrado) {
+
+                textoR.innerHTML =
+                    "<b>Docente:</b> " + fila.cells[0].textContent +
+                    "<br><b>Asignatura:</b> " + fila.cells[1].textContent +
+                    "<br><b>Día:</b> " + fila.cells[2].textContent +
+                    "<br><b>Horario:</b> " + fila.cells[3].textContent +
+                    "<br><b>Sala:</b> " + fila.cells[4].textContent;
+
+                div.style.display = "block";
+
+                encontrado = true;
+            }
+
+        } else {
+
+            fila.style.display = "none";
+
+        }
+
+    });
+
+    if (texto === "") {
+
+        div.style.display = "none";
+
+        filas.forEach(fila => {
+            fila.style.display = "";
+        });
+
+    }
+
+    if (texto !== "" && !encontrado) {
+
+        textoR.textContent =
+            "No se encontró ese docente. Verifica el nombre e intenta nuevamente.";
+
+        div.style.display = "block";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
